@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [uploading, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const router = useRouter();
 
   // for now 1 gallery - eventually use galleryid
   const galleryId = "default";
@@ -15,22 +17,27 @@ export default function Home() {
 
 
   async function handleFileSelected(file: File) {
+    console.log("enter handleFileSelected");
     setMsg(null);
 
     // Basic validation
     if (!file.type.startsWith("image/")) {
+      console.log("return: not an image", file.type);
       setMsg("Please choose an image.");
       return;
     }
     const maxBytes = 15 * 1024 * 1024;
     if (file.size > maxBytes) {
+      console.log("return: too large", file.size);
       setMsg("Image too large (max 15MB).");
       return;
     }
 
     const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
     const ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+    console.log("env check", process.env.NEXT_PUBLIC_SUPABASE_URL, !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
     if (!SUPABASE_URL || !ANON_KEY) {
+      console.log("return: missing env vars", { SUPABASE_URL, hasKey: !!ANON_KEY });
       setMsg("Missing Supabase env vars.");
       return;
     }
@@ -48,16 +55,19 @@ export default function Home() {
       const uploadRes = await fetch(
           `${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`,
           {
-            method: "POST",
+            method: "PUT",
             headers: {
               apikey: ANON_KEY,
               Authorization: `Bearer ${ANON_KEY}`,
-              "Content-Type": file.type,
-              "x-upsert": "false",
+              "Content-Type": file.type || "application/octet-stream",
             },
             body: file,
           }
       );
+
+      const uploadText = await uploadRes.text();
+      console.log("storage status", uploadRes.status);
+      console.log("storage response", uploadText);
 
       if (!uploadRes.ok) {
         const text = await uploadRes.text();
@@ -89,6 +99,10 @@ export default function Home() {
       }
 
       setMsg("Uploaded!");
+      setTimeout(() => {
+        router.push("/gallery");
+      }, 200);
+      router.push("/gallery");
     } catch (e: any) {
       setMsg(e?.message ?? "Upload failed.");
     } finally {
@@ -141,6 +155,7 @@ export default function Home() {
               capture="environment"
               className="hidden"
               onChange={(e) => {
+                console.log("File Selected");
                 const file = e.target.files?.[0];
                 if (file) handleFileSelected(file);
               }}
@@ -150,7 +165,10 @@ export default function Home() {
           <button
               type="button"
               disabled={uploading}
-              onClick={() => inputRef.current?.click()}
+              onClick={() => {
+                console.log("Upload button clicked");
+                inputRef.current?.click();
+              }}
               className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px] whitespace-nowrap disabled:opacity-60"
           >
             {uploading ? "Uploading..." : "Upload Image"}
@@ -158,7 +176,7 @@ export default function Home() {
 
           <a
             className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="/gallery"
             target="_blank"
             rel="noopener noreferrer"
           >
