@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ExpiresIn from "./ExpiresIn";
 
 type PhotoRow = {
     id: string;
@@ -40,17 +40,30 @@ export default async function GalleryPage() {
             <h1 className="text-2xl font-semibold">Gallery</h1>
 
             <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-                {photos.map((p) => (
-                    <a key={p.id} href={p.public_url} target="_blank" rel="noreferrer">
-                        {/* plain img is simplest for external URLs */}
-                        <img
-                            src={p.public_url}
-                            alt="Uploaded"
-                            className="aspect-square w-full rounded-xl object-cover border border-black/[.08] dark:border-white/[.145]"
-                            loading="lazy"
-                        />
-                    </a>
-                ))}
+                {photos.map((p) => {
+                    const isExpired = new Date(p.created_at).getTime() < Date.now() - 24 * 60 * 60 * 1000;
+                    if (isExpired) return null;
+
+                    return (
+                        <a key={p.id} href={p.public_url} target="_blank" rel="noreferrer"
+                           className={"group relative block"}>
+                            {/* plain img is simplest for external URLs */}
+                            <img
+                                src={p.public_url}
+                                alt="Uploaded"
+                                className="aspect-square w-full rounded-xl object-cover border border-black/[.08] dark:border-white/[.145]"
+                                loading="lazy"
+                            />
+                            {/* Hover overlay */}
+                            <div
+                                className="pointer-events-none absolute inset-0 flex items-end rounded-xl bg-black/0 opacity-0 transition duration-200 group-hover:bg-black/40 group-hover:opacity-100">
+                                <div className="m-2 rounded-md bg-black/70 px-2 py-1 text-xs text-white">
+                                    Expires in <ExpiresIn createdAt={p.created_at} ttlHours={24}/>
+                                </div>
+                            </div>
+                        </a>
+                    );
+                })}
             </div>
 
             <div className="mt-8 flex flex-col gap-12 text-base font-medium sm:flex-row">
