@@ -18,12 +18,18 @@ export default function PhotoTile({ id, public_url, created_at, }: {
             className="group relative block"
             onClick={(e) => {
                 // First tap shows overlay, second tap opens the image.
+                /*
                 if (!show) {
                     e.preventDefault();
                     setShow(true);
                 }
+                 */
+                if (window.matchMedia("(hover: none)").matches) {
+                    e.preventDefault();
+                    setShow((s) => !s);
+                }
             }}
-            onBlur={() => setShow(false)}
+            //onBlur={() => setShow(false)}
         >
             <img
                 src={public_url}
