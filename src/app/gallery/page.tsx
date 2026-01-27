@@ -1,4 +1,4 @@
-import ExpiresIn from "./ExpiresIn";
+import PhotoTile from "./PhotoTile";
 
 type PhotoRow = {
     id: string;
@@ -45,23 +45,12 @@ export default async function GalleryPage() {
                     if (isExpired) return null;
 
                     return (
-                        <a key={p.id} href={p.public_url} target="_blank" rel="noreferrer"
-                           className={"group relative block"}>
-                            {/* plain img is simplest for external URLs */}
-                            <img
-                                src={p.public_url}
-                                alt="Uploaded"
-                                className="aspect-square w-full rounded-xl object-cover border border-black/[.08] dark:border-white/[.145]"
-                                loading="lazy"
-                            />
-                            {/* Hover overlay */}
-                            <div
-                                className="pointer-events-none absolute inset-0 flex items-end rounded-xl bg-black/0 opacity-0 transition duration-200 group-hover:bg-black/40 group-hover:opacity-100">
-                                <div className="m-2 rounded-md bg-black/70 px-2 py-1 text-xs text-white">
-                                    Expires in <ExpiresIn createdAt={p.created_at} ttlHours={24}/>
-                                </div>
-                            </div>
-                        </a>
+                        <PhotoTile
+                            key={p.id}
+                            id={p.id}
+                            public_url={p.public_url}
+                            created_at={p.created_at}
+                        />
                     );
                 })}
             </div>
