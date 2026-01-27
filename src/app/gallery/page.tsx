@@ -36,7 +36,7 @@ export default async function GalleryPage() {
     const photos: PhotoRow[] = await res.json();
 
     return (
-        <main className="p-8">
+        <main className="p-8 font-sans">
             <h1 className="text-2xl font-semibold">Gallery</h1>
 
             <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
@@ -53,12 +53,10 @@ export default async function GalleryPage() {
                 ))}
             </div>
 
-            <div className="flex flex-col gap-12 text-base font-medium sm:flex-row">
+            <div className="mt-8 flex flex-col gap-12 text-base font-medium sm:flex-row">
                 <a
                     className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
                     href="https://pov-angela-chang.vercel.app/"
-                    //target="_blank"
-                    //rel="noopener noreferrer"
                 >
                     Upload More
                 </a>
