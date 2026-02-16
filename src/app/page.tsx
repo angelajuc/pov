@@ -114,10 +114,10 @@ export default function Home() {
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="relative flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <div className="absolute top-6 right-6 flex gap-4 text-sm">
-          <a href="/login" className="underline">
+          <a href="/login" className="font-semibold underline">
             Login
           </a>
-          <a href="/signup" className="underline">
+          <a href="/signup" className="font-semibold underline">
             Sign up
           </a>
         </div>
