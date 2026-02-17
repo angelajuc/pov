@@ -36,10 +36,9 @@ export default function LoginPage() {
   }
 
   return (
-    //<main className="p-6 max-w-sm mx-auto font-sans">
-    <main className="min-h-screen flex items-center justify-center p-6 font-sans">
+    <main className="min-h-screen flex justify-center pt-24 md: pt-32 p-6 font-sans">
       <div className="w-full max-w-sm">
-        <h1 className="text-2xl font-semibold">Log in</h1>
+        <h1 className="text-2xl text-center font-semibold">Log in</h1>
 
         <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3">
           <input
