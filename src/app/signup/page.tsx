@@ -77,6 +77,10 @@ export default function SignupPage() {
 
         {msg && <p className="text-sm mt-2">{msg}</p>}
       </form>
+
+      <a href="/login" className="mt-6 block text-center font-semibold underline">
+              Already have an account? Log in here!
+      </a>
     </main>
   );
 }
