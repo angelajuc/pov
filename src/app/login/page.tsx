@@ -36,41 +36,46 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="p-6 max-w-sm mx-auto font-sans">
-      <h1 className="text-2xl font-semibold">Log in</h1>
+    //<main className="p-6 max-w-sm mx-auto font-sans">
+    <main className="min-h-screen flex items-center justify-center p-6 font-sans">
+      <div className="w-full max-w-sm">
+        <h1 className="text-2xl font-semibold">Log in</h1>
 
-      <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3">
-        <input
-          className="border rounded px-3 py-2"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          className="border rounded px-3 py-2"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3">
+          <input
+            className="border rounded px-3 py-2"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            className="border rounded px-3 py-2"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-        <button
-          disabled={busy}
-          className="mt-2 h-11 rounded bg-black text-white disabled:opacity-60"
-          type="submit"
-        >
-          {busy ? "Signing in…" : "Log in"}
-        </button>
+          <button
+            disabled={busy}
+            className="mt-2 h-11 rounded bg-black text-white disabled:opacity-60"
+            type="submit"
+          >
+            {busy ? "Signing in…" : "Log in"}
+          </button>
 
-        {msg && <p className="text-sm mt-2">{msg}</p>}
-      </form>
+          {msg && <p className="text-sm mt-2">{msg}</p>}
+        </form>
 
-      <a href="/signup" className="mt-6 block text-center font-semibold underline">
-        Don't have an account? Sign up here!
-      </a>
+        <div className="mt-6 text-center">
+          <a href="/signup" className="font-semibold underline">
+            Don't have an account? Sign up here!
+          </a>
+        </div>
+      </div>
     </main>
   );
 }
