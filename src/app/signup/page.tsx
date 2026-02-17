@@ -47,7 +47,7 @@ export default function SignupPage() {
 
   return (
     <main className="p-6 max-w-sm mx-auto font-sans">
-      <h1 className="text-2xl font-semibold">Sign up</h1>
+      <h1 className="text-2xl text-center font-semibold">Sign up</h1>
 
       <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3">
         <input
