@@ -29,7 +29,7 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/gallery");
+      router.push("/signup");
     } finally {
       setBusy(false);
     }
@@ -67,6 +67,10 @@ export default function LoginPage() {
 
         {msg && <p className="text-sm mt-2">{msg}</p>}
       </form>
+
+      <a href="/signup" className="mt-6 block text-center font-semibold underline">
+        Don't have an account? Sign up here!
+      </a>
     </main>
   );
 }
