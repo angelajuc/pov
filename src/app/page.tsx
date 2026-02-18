@@ -121,7 +121,7 @@ export default function Home() {
             Sign up
           </a>
         </div>
-        <h1 className="max-w-s text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
+        <h1 className="max-w-s text-3xl text-center font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
             See things the way I see
         </h1>
         <Image
