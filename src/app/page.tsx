@@ -112,7 +112,7 @@ export default function Home() {
   }
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="relative flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+      <main className="relative flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-56 bg-white dark:bg-black sm:items-start">
         <div className="absolute top-6 right-6 flex gap-4 text-sm">
           <a href="/login" className="font-semibold underline">
             Login
@@ -121,7 +121,7 @@ export default function Home() {
             Sign up
           </a>
         </div>
-        <h1 className="max-w-s text-3xl text-center font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
+        <h1 className="max-w-l text-3xl text-center font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
             See things the way I see
         </h1>
         <Image
@@ -133,7 +133,7 @@ export default function Home() {
           priority
         />
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-s text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
+          <h1 className="max-w-s text-3xl text-center font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
             Upload your POV to the gallery
           </h1>
           <p className="max-w-xs sm:max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
