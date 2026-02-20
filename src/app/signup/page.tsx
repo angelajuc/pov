@@ -46,7 +46,7 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="min-h-screen flex justify-center pt-24 md: pt-32 p-6 font-sans">
+    <main className="min-h-screen flex justify-center pt-24 md:pt-32 p-6 font-sans">
       <div className="w-full max-w-sm">
         <h1 className="text-2xl text-center font-semibold">Sign up</h1>
 

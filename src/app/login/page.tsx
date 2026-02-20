@@ -29,14 +29,14 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/signup");
+      router.push("/gallery");
     } finally {
       setBusy(false);
     }
   }
 
   return (
-    <main className="min-h-screen flex justify-center pt-24 md: pt-32 p-6 font-sans">
+    <main className="min-h-screen flex justify-center pt-24 md:pt-32 p-6 font-sans">
       <div className="w-full max-w-sm">
         <h1 className="text-2xl text-center font-semibold">Log in</h1>
 
