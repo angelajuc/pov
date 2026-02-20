@@ -70,8 +70,7 @@ export default function Home() {
       console.log("storage response", uploadText);
 
       if (!uploadRes.ok) {
-        const text = await uploadRes.text();
-        throw new Error(`Storage upload failed: ${uploadRes.status} ${text}`);
+        throw new Error(`Storage upload failed: ${uploadRes.status} ${uploadText}`);
       }
 
       // Public URL for a public bucket:
@@ -103,7 +102,7 @@ export default function Home() {
         router.push("/gallery");
       }, 200);
       router.push("/gallery");
-    } catch (e: any) {
+    } catch (e: unknown) {
       setMsg(e?.message ?? "Upload failed.");
     } finally {
       setBusy(false);
@@ -112,7 +111,7 @@ export default function Home() {
   }
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="relative flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-56 bg-white dark:bg-black sm:items-start">
+      <main className="relative flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-6 sm: px-16 md: px-56 bg-white dark:bg-black sm:items-start">
         <div className="absolute top-6 right-6 flex gap-4 text-sm">
           <a href="/login" className="font-semibold underline">
             Login
@@ -121,7 +120,7 @@ export default function Home() {
             Sign up
           </a>
         </div>
-        
+
         <Image
           className="dark:invert"
           src="/QRcode.svg"
@@ -152,7 +151,7 @@ export default function Home() {
               className="font-medium text-zinc-950 dark:text-zinc-50"
             >
               Linkedin
-            </a>{" "}
+            </a>
             .
           </p>
         </div>
