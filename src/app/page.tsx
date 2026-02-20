@@ -102,7 +102,7 @@ export default function Home() {
         router.push("/gallery");
       }, 200);
       router.push("/gallery");
-    } catch (e: unknown) {
+    } catch (e: any) {
       setMsg(e?.message ?? "Upload failed.");
     } finally {
       setBusy(false);
