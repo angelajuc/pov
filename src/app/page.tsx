@@ -1,82 +1,91 @@
 "use client";
 
-import Image from "next/image";
-import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import PhotoTile from "./gallery/PhotoTile";
+
+type PhotoRow = {
+  id: string;
+  public_url: string;
+  created_at: string;
+};
 
 export default function Home() {
-
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [uploading, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
-  const router = useRouter();
+  const [photos, setPhotos] = useState<PhotoRow[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // for now 1 gallery - eventually use galleryid
   const galleryId = "default";
-  const bucket = "my-pov"; // <-- must match your Supabase Storage bucket name
+  const bucket = "my-pov";
 
+  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+  async function fetchPhotos() {
+    const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/photos?gallery_id=eq.${galleryId}&created_at=gte.${cutoff}&order=created_at.desc&limit=200`,
+      {
+        headers: {
+          apikey: ANON_KEY,
+          Authorization: `Bearer ${ANON_KEY}`,
+        },
+      }
+    );
+    if (res.ok) {
+      const data: PhotoRow[] = await res.json();
+      setPhotos(data);
+    }
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchPhotos();
+  }, []);
 
   async function handleFileSelected(file: File) {
-    console.log("enter handleFileSelected");
     setMsg(null);
 
-    // Basic validation
     if (!file.type.startsWith("image/")) {
-      console.log("return: not an image", file.type);
       setMsg("Please choose an image.");
       return;
     }
-    const maxBytes = 15 * 1024 * 1024;
-    if (file.size > maxBytes) {
-      console.log("return: too large", file.size);
+    if (file.size > 15 * 1024 * 1024) {
       setMsg("Image too large (max 15MB).");
       return;
     }
-
-    const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-    console.log("env check", process.env.NEXT_PUBLIC_SUPABASE_URL, !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
     if (!SUPABASE_URL || !ANON_KEY) {
-      console.log("return: missing env vars", { SUPABASE_URL, hasKey: !!ANON_KEY });
       setMsg("Missing Supabase env vars.");
       return;
     }
 
     setBusy(true);
     try {
-      // Build a unique path like: default/1700000000000_abcd.jpg
       const ext = file.name.split(".").pop() || "jpg";
       const random = Math.random().toString(16).slice(2);
       const path = `${galleryId}/${Date.now()}_${random}.${ext}`;
 
-      // 1) Upload image to Storage via REST
-      // POST or PUT both can work; Supabase docs commonly use POST/PUT depending on endpoint.
-      // This endpoint accepts the raw file bytes as the request body.
       const uploadRes = await fetch(
-          `${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`,
-          {
-            method: "PUT",
-            headers: {
-              apikey: ANON_KEY,
-              Authorization: `Bearer ${ANON_KEY}`,
-              "Content-Type": file.type || "application/octet-stream",
-            },
-            body: file,
-          }
+        `${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`,
+        {
+          method: "PUT",
+          headers: {
+            apikey: ANON_KEY,
+            Authorization: `Bearer ${ANON_KEY}`,
+            "Content-Type": file.type || "application/octet-stream",
+          },
+          body: file,
+        }
       );
 
       const uploadText = await uploadRes.text();
-      console.log("storage status", uploadRes.status);
-      console.log("storage response", uploadText);
-
       if (!uploadRes.ok) {
         throw new Error(`Storage upload failed: ${uploadRes.status} ${uploadText}`);
       }
 
-      // Public URL for a public bucket:
       const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${path}`;
 
-      // 2) Insert row into photos table via PostgREST
       const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/photos`, {
         method: "POST",
         headers: {
@@ -98,97 +107,97 @@ export default function Home() {
       }
 
       setMsg("Uploaded!");
-      setTimeout(() => {
-        router.push("/gallery");
-      }, 200);
-      router.push("/gallery");
-    } catch (e: any) {
-      setMsg(e?.message ?? "Upload failed.");
+      // Refresh the gallery immediately
+      await fetchPhotos();
+    } catch (e: unknown) {
+      setMsg(e instanceof Error ? e.message : "Upload failed.");
     } finally {
       setBusy(false);
       if (inputRef.current) inputRef.current.value = "";
     }
   }
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="relative flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-6 sm: px-16 md: px-56 bg-white dark:bg-black sm:items-start">
+      <main className="relative flex min-h-screen w-full max-w-3xl flex-col py-12 px-6 sm:px-16 bg-white dark:bg-black">
         <div className="absolute top-6 right-6 flex gap-4 text-sm">
-          <a href="/login" className="font-semibold underline">
-            Login
-          </a>
-          <a href="/signup" className="font-semibold underline">
-            Sign up
-          </a>
+          <a href="/login" className="font-semibold underline">Login</a>
+          <a href="/signup" className="font-semibold underline">Sign up</a>
         </div>
 
-        <Image
-          className="dark:invert"
-          src="/QRcode.svg"
-          alt="QR Code"
-          width={170}
-          height={200}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-s text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            Upload your POV to the gallery
+        <div className="flex flex-col items-center gap-4 text-center sm:items-start sm:text-left">
+          <h1 className="text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
+            POINT OF VIEW
           </h1>
           <p className="max-w-xs sm:max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Hi, my name is Angela!
-            Looking for more?
-            <br />
-            Head over to my{" "}
-            <a
-              href="https://mootooo.vercel.app/"
-              //"https://pov-angela-chang.vercel.app/"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
+            Hey there, see the way I see through POV.
+            Looking for more? Head over to my{" "}
+            <a href="https://mootooo.vercel.app/" className="font-medium text-zinc-950 dark:text-zinc-50">
               Portfolio
             </a>{" "}
             or my{" "}
-            <a
-              href="https://www.linkedin.com/in/angelachang4303/"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
+            <a href="https://www.linkedin.com/in/angelachang4303/" className="font-medium text-zinc-950 dark:text-zinc-50">
               Linkedin
-            </a>
-            .
+            </a>.
           </p>
         </div>
-        <div className="mt-6 flex flex-col gap-4 text-base font-medium sm:flex-row">
-          {/* hidden file input */}
-          <input
-              ref={inputRef}
-              type="file"
-              accept="image/*"
-              capture="environment"
-              className="hidden"
-              onChange={(e) => {
-                console.log("File Selected");
-                const file = e.target.files?.[0];
-                if (file) handleFileSelected(file);
-              }}
-          />
 
-          {/* Upload Image button (same styling) */}
+        <div className="mt-6 flex flex-col gap-4 text-base font-medium sm:flex-row">
+          <input
+            ref={inputRef}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleFileSelected(file);
+            }}
+          />
           <button
-              type="button"
-              disabled={uploading}
-              onClick={() => {
-                console.log("Upload button clicked");
-                inputRef.current?.click();
-              }}
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px] whitespace-nowrap disabled:opacity-60"
+            type="button"
+            disabled={uploading}
+            onClick={() => inputRef.current?.click()}
+            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px] whitespace-nowrap disabled:opacity-60"
           >
             {uploading ? "Uploading..." : "Upload Image"}
           </button>
+        </div>
 
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="/gallery"
-          >
-            View Gallery
-          </a>
+        {msg && <p className="mt-3 text-sm">{msg}</p>}
+
+        {/* Photo Gallery */}
+        <div className="mt-8">
+          {loading ? (
+            <p className="text-zinc-500">Loading gallery...</p>
+          ) : photos.length === 0 ? (
+            <p className="text-zinc-500">No photos yet — be the first to upload!</p>
+          ) : (
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+              {photos.map((p) => (
+                <PhotoTile
+                  key={p.id}
+                  id={p.id}
+                  public_url={p.public_url}
+                  created_at={p.created_at}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-col items-center gap-4 text-center sm:items-start sm:text-left">
+          <p className="max-w-xs sm:max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
+            Looking for more?
+            Head over to my{" "}
+              <a href="https://mootooo.vercel.app/" className="font-medium text-zinc-950 dark:text-zinc-50">
+                Portfolio
+              </a>{" "}
+                or my{" "}
+              <a href="https://www.linkedin.com/in/angelachang4303/" className="font-medium text-zinc-950 dark:text-zinc-50">
+                Linkedin
+              </a>.
+          </p>
         </div>
       </main>
     </div>
