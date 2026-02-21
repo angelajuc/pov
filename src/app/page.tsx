@@ -130,15 +130,7 @@ export default function Home() {
             POINT OF VIEW
           </h1>
           <p className="max-w-xs sm:max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Hey there, see the way I see through POV.
-            Looking for more? Head over to my{" "}
-            <a href="https://mootooo.vercel.app/" className="font-medium text-zinc-950 dark:text-zinc-50">
-              Portfolio
-            </a>{" "}
-            or my{" "}
-            <a href="https://www.linkedin.com/in/angelachang4303/" className="font-medium text-zinc-950 dark:text-zinc-50">
-              Linkedin
-            </a>.
+            See the way I see through POV.
           </p>
         </div>
 
@@ -186,12 +178,11 @@ export default function Home() {
           )}
         </div>
 
-        <div className="flex flex-col items-center gap-4 text-center sm:items-start sm:text-left">
-          <p className="max-w-xs sm:max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for more?
-            Head over to my{" "}
+        <div className="mt-auto flex flex-col mt-4 items-center gap-4 text-center sm:items-start sm:text-left">
+          <p className="max-w-xs sm:max-w-md text-sm leading-8 text-zinc-600 dark:text-zinc-400">
+            Looking for more? Check out my{" "}
               <a href="https://mootooo.vercel.app/" className="font-medium text-zinc-950 dark:text-zinc-50">
-                Portfolio
+                other site
               </a>{" "}
                 or my{" "}
               <a href="https://www.linkedin.com/in/angelachang4303/" className="font-medium text-zinc-950 dark:text-zinc-50">
