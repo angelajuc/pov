@@ -146,14 +146,32 @@ export default function Home() {
               if (file) handleFileSelected(file);
             }}
           />
+
           <button
             type="button"
             disabled={uploading}
             onClick={() => inputRef.current?.click()}
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px] whitespace-nowrap disabled:opacity-60"
+            className="group relative flex h-12 items-center gap-2 rounded-2xl border border-white/40 bg-white/20 px-6 text-sm font-medium text-zinc-700 shadow-lg shadow-pink-200/30 backdrop-blur-xl transition-all hover:bg-white/30 hover:shadow-pink-300/40 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 dark:border-white/10 dark:bg-white/10 dark:text-zinc-200 dark:shadow-purple-500/20"
           >
-            {uploading ? "Uploading..." : "Upload Image"}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="opacity-60 transition-transform group-hover:-translate-y-0.5"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            {uploading ? "Uploading..." : "Upload Photo"}
           </button>
+
         </div>
 
         {msg && <p className="mt-3 text-sm">{msg}</p>}
