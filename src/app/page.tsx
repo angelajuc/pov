@@ -126,10 +126,10 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col items-center gap-4 text-center sm:items-start sm:text-left">
-          <h1 className="text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
+          <h1 className="font-[family-name:var(--font-nabla)] text-5xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
             POINT OF VIEW
           </h1>
-          <p className="max-w-xs sm:max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
+          <p className="font-[family-name:var(--font-nabla)] max-w-xs sm:max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
             See the way I see through POV.
           </p>
         </div>
