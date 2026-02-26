@@ -72,9 +72,11 @@ export default function FeedCard({ photo }: Props) {
     <div className="rounded-2xl border border-zinc-200 bg-white shadow-sm overflow-hidden dark:border-zinc-800 dark:bg-zinc-900">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3">
-        <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-          {photo.email}
-        </span>
+        {photo.email && (
+          <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            {photo.email}
+          </span>
+        )}
         <span className="text-xs text-zinc-400">
           <ExpiresIn createdAt={photo.created_at} ttlHours={24} />
         </span>

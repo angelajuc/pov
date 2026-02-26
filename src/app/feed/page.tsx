@@ -7,7 +7,7 @@ type PhotoRow = {
   id: string;
   public_url: string;
   created_at: string;
-  email: string;
+  email: string | null;
 };
 
 export default function FeedPage() {
