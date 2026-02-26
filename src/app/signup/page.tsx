@@ -38,7 +38,7 @@ export default function SignupPage() {
         body: JSON.stringify({ email, password }),
       });
 
-      if (loginRes.ok) router.push("/gallery");
+      if (loginRes.ok) router.push("/page");
       else router.push("/login");
     } finally {
       setBusy(false);
