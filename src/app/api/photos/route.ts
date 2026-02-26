@@ -21,5 +21,23 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
+  // Get uploader emails
+  const userIds = [...new Set(data?.map((p) => p.user_id).filter(Boolean) ?? [])];
+  let userMap: Record<string, string> = {};
+
+  if (userIds.length > 0) {
+    const { data: users } = await supabase
+      .from("users_local")
+      .select("id, email")
+      .in("id", userIds);
+
+    userMap = Object.fromEntries(users?.map((u) => [u.id, u.email]) ?? []);
+  }
+
+  const photos = data?.map((p) => ({
+    ...p,
+    email: p.user_id ? userMap[p.user_id] ?? null : "anon",
+  }));
+
   return NextResponse.json(data);
 }
