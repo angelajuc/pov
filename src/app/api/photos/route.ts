@@ -36,7 +36,7 @@ export async function GET() {
 
   const photos = data?.map((p) => ({
     ...p,
-    email: p.user_id ? userMap[p.user_id] ?? null : "anon",
+    email: p.user_id ? userMap[p.user_id] ?? "anon" : "anon",
   }));
 
   return NextResponse.json(data);

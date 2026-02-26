@@ -7,7 +7,7 @@ type PhotoRow = {
   id: string;
   public_url: string;
   created_at: string;
-  email: string | null;
+  email: string;
 };
 
 export default function FeedPage() {
@@ -21,7 +21,7 @@ export default function FeedPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <main className="p-8 font-sans"><p className="text-zinc-500">Loading feed...</p></main>;
+  if (loading) return <main className="p-8 font-sans"><p className="text-white">Loading feed...</p></main>;
 
   return (
     <main className="min-h-screen bg-zinc-50 font-sans dark:bg-black">
