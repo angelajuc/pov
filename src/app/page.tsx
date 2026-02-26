@@ -7,6 +7,7 @@ type PhotoRow = {
   id: string;
   public_url: string;
   created_at: string;
+  email: string;
 };
 
 export default function Home() {
@@ -16,23 +17,8 @@ export default function Home() {
   const [photos, setPhotos] = useState<PhotoRow[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const galleryId = "default";
-  const bucket = "my-pov";
-
-  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
   async function fetchPhotos() {
-    const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/photos?gallery_id=eq.${galleryId}&created_at=gte.${cutoff}&order=created_at.desc&limit=200`,
-      {
-        headers: {
-          apikey: ANON_KEY,
-          Authorization: `Bearer ${ANON_KEY}`,
-        },
-      }
-    );
+    const res = await fetch("/api/photos");
     if (res.ok) {
       const data: PhotoRow[] = await res.json();
       setPhotos(data);
@@ -55,55 +41,22 @@ export default function Home() {
       setMsg("Image too large (max 15MB).");
       return;
     }
-    if (!SUPABASE_URL || !ANON_KEY) {
-      setMsg("Missing Supabase env vars.");
-      return;
-    }
 
     setBusy(true);
     try {
-      const ext = file.name.split(".").pop() || "jpg";
-      const random = Math.random().toString(16).slice(2);
-      const path = `${galleryId}/${Date.now()}_${random}.${ext}`;
 
-      const uploadRes = await fetch(
-        `${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`,
-        {
-          method: "PUT",
-          headers: {
-            apikey: ANON_KEY,
-            Authorization: `Bearer ${ANON_KEY}`,
-            "Content-Type": file.type || "application/octet-stream",
-          },
-          body: file,
-        }
-      );
+      const formData = new FormData();
+      formData.append("file", file);
 
-      const uploadText = await uploadRes.text();
-      if (!uploadRes.ok) {
-        throw new Error(`Storage upload failed: ${uploadRes.status} ${uploadText}`);
-      }
+      const res = await fetch("/api/photos/upload", {
+          method: "POST",
+          body: formData,
 
-      const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${path}`;
-
-      const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/photos`, {
-        method: "POST",
-        headers: {
-          apikey: ANON_KEY,
-          Authorization: `Bearer ${ANON_KEY}`,
-          "Content-Type": "application/json",
-          Prefer: "return=representation",
-        },
-        body: JSON.stringify({
-          gallery_id: galleryId,
-          public_url: publicUrl,
-          storage_path: path,
-        }),
       });
 
-      if (!insertRes.ok) {
-        const text = await insertRes.text();
-        throw new Error(`DB insert failed: ${insertRes.status} ${text}`);
+      if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data?.error ?? "Upload failed.");
       }
 
       setMsg("Uploaded!");
