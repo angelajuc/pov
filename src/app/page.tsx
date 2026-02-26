@@ -71,18 +71,18 @@ export default function Home() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="relative flex min-h-screen w-full max-w-3xl flex-col py-12 px-6 sm:px-16 bg-white dark:bg-black">
-        <div className="absolute top-6 right-6 flex gap-4 text-sm">
-          <a href="/login" className="font-semibold underline">Login</a>
-          <a href="/signup" className="font-semibold underline">Sign up</a>
+    <div className="flex min-h-screen items-center justify-center bg-background font-sans">
+      <main className="relative flex min-h-screen w-full max-w-3xl flex-col py-12 px-6 sm:px-16 bg-background">
+        <div className="absolute top-6 right-6 flex gap-4 text-sm text-white">
+          <a href="/login" className="font-semibold">Login</a>
+          <a href="/signup" className="font-semibold">Sign up</a>
         </div>
 
         <div className="flex flex-col items-center gap-4 text-center sm:items-start sm:text-left">
-          <h1 className="font-[family-name:var(--font-nabla)] text-5xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
+          <h1 className="font-[family-name:var(--font-nabla)] text-5xl font-semibold leading-10 tracking-tight text-white">
             POINT OF VIEW
           </h1>
-          <p className="font-[family-name:var(--font-nabla)] max-w-xs sm:max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
+          <p className="font-[family-name:var(--font-nabla)] max-w-xs sm:max-w-md text-lg leading-8 text-white">
             See the way I see through POV.
           </p>
         </div>
@@ -125,16 +125,22 @@ export default function Home() {
             {uploading ? "Uploading..." : "Upload Photo"}
           </button>
 
+
+          <a href="/feed"
+            className="group relative flex h-12 items-center gap-2 rounded-2xl border border-purple-200/60 bg-purple-100/50 px-6 text-sm font-medium text-purple-900 shadow-lg shadow-purple-300/40 backdrop-blur-xl transition-all hover:bg-green-100/50 hover:shadow-green-400/50 hover:border-green-200/60 hover:text-green-900 hover:scale-[1.02] active:scale-[0.98] dark:border-purple-400/20 dark:bg-purple-500/20 dark:text-purple-100 dark:shadow-purple-500/30 dark:hover:bg-green-500/20 dark:hover:shadow-green-400/30 dark:hover:text-green-100">
+            View Feed
+          </a>
+
         </div>
 
-        {msg && <p className="mt-3 text-sm">{msg}</p>}
+        {msg && <p className="mt-6 text-sm text-white">{msg}</p>}
 
         {/* Photo Gallery */}
         <div className="mt-8">
           {loading ? (
-            <p className="text-zinc-500">Loading gallery...</p>
+            <p className="text-white">Loading gallery...</p>
           ) : photos.length === 0 ? (
-            <p className="text-zinc-500">No photos yet — be the first to upload!</p>
+            <p className="text-white">No photos yet — be the first to upload!</p>
           ) : (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
               {photos.map((p) => (
@@ -150,13 +156,13 @@ export default function Home() {
         </div>
 
         <div className="mt-auto flex flex-col mt-4 items-center gap-4 text-center sm:items-start sm:text-left">
-          <p className="max-w-xs sm:max-w-md text-sm leading-8 text-zinc-600 dark:text-zinc-400">
+          <p className="max-w-xs sm:max-w-md text-sm leading-8 text-white">
             Looking for more? Check out my{" "}
-              <a href="https://mootooo.vercel.app/" className="font-medium text-zinc-950 dark:text-zinc-50">
+              <a href="https://mootooo.vercel.app/" className="font-medium text-white">
                 other site
               </a>{" "}
                 or my{" "}
-              <a href="https://www.linkedin.com/in/angelachang4303/" className="font-medium text-zinc-950 dark:text-zinc-50">
+              <a href="https://www.linkedin.com/in/angelachang4303/" className="font-medium text-white">
                 Linkedin
               </a>.
           </p>
