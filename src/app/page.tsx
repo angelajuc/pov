@@ -151,7 +151,7 @@ export default function Home() {
             type="button"
             disabled={uploading}
             onClick={() => inputRef.current?.click()}
-            className="group relative flex h-12 items-center gap-2 rounded-2xl border border-white/40 bg-white/20 px-6 text-sm font-medium text-zinc-700 shadow-lg shadow-pink-200/30 backdrop-blur-xl transition-all hover:bg-white/30 hover:shadow-pink-300/40 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 dark:border-white/10 dark:bg-white/10 dark:text-zinc-200 dark:shadow-purple-500/20"
+            className="group relative flex h-12 items-center gap-2 rounded-2xl border border-pink-200/60 bg-pink-100/50 px-6 text-sm font-medium text-pink-900 shadow-lg shadow-pink-300/40 backdrop-blur-xl transition-all hover:bg-pink-300/60 hover:shadow-pink-400/40 hover:border-blue-500/50 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 dark:border-pink-400/20 dark:bg-blue-500/20 dark:text-yellow-100 dark:shadow-blue-500/20"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
