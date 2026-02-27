@@ -74,15 +74,15 @@ export default function Home() {
     <div className="flex min-h-screen items-center justify-center bg-background font-sans">
       <main className="relative flex min-h-screen w-full max-w-3xl flex-col py-12 px-6 sm:px-16 bg-background">
         <div className="absolute top-6 right-6 flex gap-4 text-sm text-white">
-          <a href="/login" className="font-semibold">Login</a>
-          <a href="/signup" className="font-semibold">Sign up</a>
+          <a href="/login" className="font-semibold hover:scale-[1.04] active:scale-[0.98]">Login</a>
+          <a href="/signup" className="font-semibold hover:scale-[1.04] active:scale-[0.98]">Sign up</a>
         </div>
 
         <div className="flex flex-col items-center gap-4 text-center sm:items-start sm:text-left">
-          <h1 className="font-[family-name:var(--font-nabla)] text-5xl font-semibold leading-10 tracking-tight text-white">
+          <h1 className="font-[family-name:var(--font-nabla)] text-5xl font-semibold leading-10 tracking-tight text-white hover:scale-[1.02] active:scale-[0.98]">
             POINT OF VIEW
           </h1>
-          <p className="font-[family-name:var(--font-nabla)] max-w-xs sm:max-w-md text-lg leading-8 text-white">
+          <p className="font-[family-name:var(--font-nabla)] max-w-xs sm:max-w-md text-lg leading-8 text-white hover:scale-[1.04] active:scale-[0.98]">
             See the way I see through POV.
           </p>
         </div>
@@ -104,7 +104,7 @@ export default function Home() {
             type="button"
             disabled={uploading}
             onClick={() => inputRef.current?.click()}
-            className="group relative flex h-12 items-center gap-2 rounded-2xl border border-pink-200/60 bg-pink-100/50 px-6 text-sm font-medium text-pink-900 shadow-lg shadow-pink-300/40 backdrop-blur-xl transition-all hover:bg-pink-300/60 hover:shadow-pink-400/40 hover:border-blue-500/50 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 dark:border-pink-400/20 dark:bg-blue-500/20 dark:text-yellow-100 dark:shadow-blue-500/20"
+            className="group relative flex h-12 items-center gap-2 rounded-2xl border border-pink-200/60 bg-pink-100/50 px-6 text-sm font-medium text-pink-900 shadow-lg shadow-pink-300/40 backdrop-blur-xl transition-all hover:bg-blue-100/50 hover:shadow-blue-400/60 hover:border-blue-500/50 hover:text-blue-900  hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 dark:border-pink-400/20 dark:bg-blue-500/20 dark:text-yellow-100 dark:shadow-blue-500/20"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -158,11 +158,11 @@ export default function Home() {
         <div className="mt-auto flex flex-col mt-4 items-center gap-4 text-center sm:items-start sm:text-left">
           <p className="max-w-xs sm:max-w-md text-sm leading-8 text-white">
             Looking for more? Check out {" "}
-              <a href="https://mootooo.vercel.app/" className="font-semibold font-medium text-white">
+              <a href="https://mootooo.vercel.app/" className="inline-block font-semibold font-medium text-white hover:scale-[1.04] active:scale-[0.98]">
                 mooToo!
               </a>{" "}
                 or my{" "}
-              <a href="https://www.linkedin.com/in/angelachang4303/" className="font-semibold font-medium text-white">
+              <a href="https://www.linkedin.com/in/angelachang4303/" className="inline-block font-semibold font-medium text-white hover:scale-[1.04] active:scale-[0.98]">
                 Linkedin
               </a>.
           </p>
