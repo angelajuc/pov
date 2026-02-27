@@ -42,7 +42,7 @@ export default function LoginPage() {
 
         <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3">
           <input
-            className="border rounded px-3 py-2 text-white"
+            className="border rounded px-3 py-2 text-white hover:scale-[1.02] active:scale-[0.98]"
             type="email"
             placeholder="Email"
             value={email}
@@ -50,7 +50,7 @@ export default function LoginPage() {
             required
           />
           <input
-            className="border rounded px-3 py-2 text-white"
+            className="border rounded px-3 py-2 text-white hover:scale-[1.02] active:scale-[0.98]"
             type="password"
             placeholder="Password"
             value={password}
@@ -60,7 +60,7 @@ export default function LoginPage() {
 
           <button
             disabled={busy}
-            className="font-[family-name:var(--font-jacquard-24)] text-2xl mt-2 h-11 rounded bg-black text-white disabled:opacity-60"
+            className="font-[family-name:var(--font-jacquard-24)] text-2xl mt-2 h-11 rounded bg-black text-white disabled:opacity-60 hover:scale-[1.02] active:scale-[0.98]"
             type="submit"
           >
             {busy ? "Signing in…" : "Log in"}

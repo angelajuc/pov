@@ -48,11 +48,11 @@ export default function SignupPage() {
   return (
     <main className="min-h-screen flex justify-center pt-24 md:pt-32 p-6 font-sans">
       <div className="w-full max-w-sm">
-        <h1 className="text-2xl text-center font-semibold">Sign up</h1>
+        <h1 className="font-[family-name:var(--font-nabla)] text-5xl text-center font-semibold hover:scale-[1.02] active:scale-[0.98]">Sign up</h1>
 
         <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3">
           <input
-            className="border rounded px-3 py-2"
+            className="border rounded px-3 py-2 text-white hover:scale-[1.02] active:scale-[0.98]"
             type="email"
             placeholder="Email"
             value={email}
@@ -60,7 +60,7 @@ export default function SignupPage() {
             required
           />
           <input
-            className="border rounded px-3 py-2"
+            className="border rounded px-3 py-2 text-white hover:scale-[1.02] active:scale-[0.98]"
             type="password"
             placeholder="Password (min 8 chars)"
             value={password}
@@ -70,7 +70,7 @@ export default function SignupPage() {
 
           <button
             disabled={busy}
-            className="mt-2 h-11 rounded bg-black text-white disabled:opacity-60"
+            className="font-[family-name:var(--font-jacquard-24)] text-2xl mt-2 h-11 rounded bg-black text-white hover:scale-[1.02] active:scale-[0.98]"
             type="submit"
           >
             {busy ? "Creating…" : "Create account"}
@@ -80,7 +80,7 @@ export default function SignupPage() {
         </form>
 
         <div className="mt-6 text-center">
-          <a href="/login" className="font-semibold underline">
+          <a href="/login" className="font-semibold underline text-white">
               Already have an account? Log in here!
           </a>
         </div>
