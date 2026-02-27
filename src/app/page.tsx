@@ -157,12 +157,12 @@ export default function Home() {
 
         <div className="mt-auto flex flex-col mt-4 items-center gap-4 text-center sm:items-start sm:text-left">
           <p className="max-w-xs sm:max-w-md text-sm leading-8 text-white">
-            Looking for more? Check out my{" "}
-              <a href="https://mootooo.vercel.app/" className="font-medium text-white">
-                other site
+            Looking for more? Check out {" "}
+              <a href="https://mootooo.vercel.app/" className="font-semibold font-medium text-white">
+                mooToo!
               </a>{" "}
                 or my{" "}
-              <a href="https://www.linkedin.com/in/angelachang4303/" className="font-medium text-white">
+              <a href="https://www.linkedin.com/in/angelachang4303/" className="font-semibold font-medium text-white">
                 Linkedin
               </a>.
           </p>
