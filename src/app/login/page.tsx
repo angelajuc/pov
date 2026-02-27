@@ -38,11 +38,11 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen flex justify-center pt-24 md:pt-32 p-6 font-sans">
       <div className="w-full max-w-sm">
-        <h1 className="text-2xl text-center font-semibold">Log in</h1>
+        <h1 className="font-[family-name:var(--font-nabla)] text-5xl text-center font-semibold text-white hover:scale-[1.02] active:scale-[0.98]">Log in</h1>
 
         <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3">
           <input
-            className="border rounded px-3 py-2"
+            className="border rounded px-3 py-2 text-white"
             type="email"
             placeholder="Email"
             value={email}
@@ -50,7 +50,7 @@ export default function LoginPage() {
             required
           />
           <input
-            className="border rounded px-3 py-2"
+            className="border rounded px-3 py-2 text-white"
             type="password"
             placeholder="Password"
             value={password}
@@ -60,7 +60,7 @@ export default function LoginPage() {
 
           <button
             disabled={busy}
-            className="mt-2 h-11 rounded bg-black text-white disabled:opacity-60"
+            className="font-[family-name:var(--font-jacquard-24)] text-2xl mt-2 h-11 rounded bg-black text-white disabled:opacity-60"
             type="submit"
           >
             {busy ? "Signing in…" : "Log in"}
@@ -69,7 +69,7 @@ export default function LoginPage() {
           {msg && <p className="text-sm mt-2">{msg}</p>}
         </form>
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 text-center text-white">
           <a href="/signup" className="font-semibold underline">
             Don't have an account? Sign up here!
           </a>
