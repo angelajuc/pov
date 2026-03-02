@@ -131,6 +131,11 @@ export default function Home() {
             View Feed
           </a>
 
+          <a href="/feed"
+            className="group relative flex h-12 items-center gap-2 rounded-2xl border border-orange-200/60 bg-orange-100/50 px-6 text-sm font-medium text-orange-900 shadow-lg shadow-orange-300/40 backdrop-blur-xl transition-all hover:bg-yellow-200/50 hover:shadow-yellow-400/50 hover:border-yellow-200/60 hover:text-yellow-900 hover:scale-[1.02] active:scale-[0.98] dark:border-orange-400/20 dark:bg-orange-500/20 dark:text-orange-100 dark:shadow-orange-500/30 dark:hover:bg-red-500/20 dark:hover:shadow-red-400/30 dark:hover:text-red-100">
+            Checkout the View
+          </a>
+
         </div>
 
         {msg && <p className="mt-6 text-sm text-white">{msg}</p>}
