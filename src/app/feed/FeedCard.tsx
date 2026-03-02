@@ -99,8 +99,8 @@ export default function FeedCard({ photo }: Props) {
               width="22"
               height="22"
               viewBox="0 0 24 24"
-              fill={liked ? "#f43f5e" : "none"}
-              stroke={liked ? "#f43f5e" : "currentColor"}
+              fill={liked ? "#f9a8d4" : "#bacfd6"}
+              stroke={liked ? "#f43f5e" : "#ffffff"}
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
