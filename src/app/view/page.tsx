@@ -24,7 +24,7 @@ export default function ViewPage() {
   if (loading) return <main className="p-8 font-sans"><p className="text-white">Loading feed...</p></main>;
 
   return (
-    <main className="min-h-screen bg-yellow-100/100 font-sans dark:bg-pink-200/100">
+    <main className="min-h-screen bg-pink-100/100 font-sans dark:bg-pink-200/100">
       <div className="mx-auto max-w-md py-8 px-4">
         <h1 className="text-2xl font-medium mb-6 text-center">View</h1>
 
