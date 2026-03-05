@@ -26,7 +26,7 @@ export default function FeedPage() {
   return (
     <main className="min-h-screen bg-pink-200/100 font-sans dark:bg-pink-200/100">
       <div className="mx-auto max-w-md py-8 px-4">
-        <h1 className="font-[family-name:var(--font-nabla)] text-4xl font-medium mb-4 text-left hover:scale-[1.04] active:scale-[0.98]">Feed</h1>
+        <h1 className="font-[family-name:var(--font-nabla)] text-5xl font-medium mb-4 text-center hover:scale-[1.04] active:scale-[0.98]">Feed</h1>
 
         <div className="absolute top-6 right-6 text-sm text-black hover:scale-[1.04] active:scale-[0.98]">
           <a href="/" className="font-[family-name:var(--font-jacquard-24)] text-3xl">Return Home</a>
